@@ -1,0 +1,15 @@
+{
+    "name": "jen/mvc-framework",
+    "authors": [
+        {
+            "name": "Eugen",
+            "email": "gram25042002@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {}
+}
