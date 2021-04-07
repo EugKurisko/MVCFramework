@@ -1,5 +1,7 @@
 <?php
 
+use app\core\Application;
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -12,7 +14,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>MVC Framework</title>
 </head>
 
 <body>
@@ -44,6 +46,11 @@
         </div>
     </nav>
     <div class="container">
+        <?php if (Application::$app->session->getFlash('success')) : ?>
+            <div class="alert alert-success">
+                <?php echo Application::$app->session->getFlash('success') ?>
+            </div>
+        <?php endif; ?>
         {{content}}
     </div>
     <!-- Optional JavaScript; choose one of the two! -->
