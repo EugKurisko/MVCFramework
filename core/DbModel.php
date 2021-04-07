@@ -4,8 +4,9 @@ namespace app\core;
 
 abstract class DbModel extends Model
 {
-    abstract public function tableName(): string;
+    abstract public static function tableName(): string;
     abstract public function attributes(): array;
+    abstract public static function primaryKey(): string;
 
     public function save()
     {
@@ -19,6 +20,19 @@ abstract class DbModel extends Model
         }
         $statement->execute();
         return true;
+    }
+
+    public static function findOne($where)
+    {
+        $tableName = static::tableName(); //call method on class on which current method was called
+        $attributes = array_keys($where);
+        $sql = implode("AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
+        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+        $statement->execute();
+        return $statement->fetchObject(static::class); //returns instance of class on which current method was called
     }
 
     public static function prepare(string $sql)
